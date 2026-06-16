@@ -1,0 +1,55 @@
+steps:
+  # 1. Build the Backend Docker Image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/ecomind-backend:latest', './backend']
+    id: 'build-backend'
+
+  # 2. Build the Frontend Docker Image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/ecomind-frontend:latest', './frontend']
+    id: 'build-frontend'
+
+  # 3. Push Backend Image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/ecomind-backend:latest']
+    id: 'push-backend'
+
+  # 4. Push Frontend Image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/ecomind-frontend:latest']
+    id: 'push-frontend'
+
+  # 5. Deploy Backend to Google Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'ecomind-backend'
+      - '--image=gcr.io/$PROJECT_ID/ecomind-backend:latest'
+      - '--region=asia-south1'
+      - '--platform=managed'
+      - '--port=8080'
+      - '--memory=512Mi'
+      - '--allow-unauthenticated'
+      - '--set-env-vars=GCP_PROJECT=$PROJECT_ID,VERTEX_AI_LOCATION=us-central1'
+    id: 'deploy-backend'
+
+  # 6. Deploy Frontend to Google Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'ecomind-frontend'
+      - '--image=gcr.io/$PROJECT_ID/ecomind-frontend:latest'
+      - '--region=asia-south1'
+      - '--platform=managed'
+      - '--port=8080'
+      - '--memory=512Mi'
+      - '--allow-unauthenticated'
+    id: 'deploy-frontend'
+
+images:
+  - 'gcr.io/$PROJECT_ID/ecomind-backend:latest'
+  - 'gcr.io/$PROJECT_ID/ecomind-frontend:latest'
