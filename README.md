@@ -136,3 +136,27 @@ The script will deploy the Firestore rules and trigger a Google Cloud Build step
 - **High Impact (Smart AI & Usability)**: Vertex AI provides structured JSON schemas to deliver consistent outputs. Conversational coaching leverages the latest user profile context to offer highly personalized, local advice.
 - **Medium Impact (Code & Scalability)**: Clean separation of concerns (Routers, Services, Schemas). Uses FastAPI dependencies for security checking. Firestore index caching minimizes read cost for leaderboard lists.
 - **Low Impact (Accessibility & UX)**: Built dark-mode-first with high contrast ratios, semantic elements, and keyboard navigability. Uses canvas confetti and Framer Motion micro-interactions.
+
+---
+
+## 🎯 Hackathon Submission Context
+
+### Chosen Vertical: Indian Urban Household Carbon Awareness
+This solution is designed for **Indian urban citizens and households**. We target urban contexts in India because of:
+1. The unique grid profile (heavily dependent on coal).
+2. The prevalence of specific transportation options (auto-rickshaws, metro, two-wheelers).
+3. Cultural dietary practices (predominantly vegetarian/vegan variations).
+4. Localizing metrics to household units (e.g. LPG cylinders, electricity bill units in kWh) rather than abstract metric tons.
+
+### Approach & Logic
+EcoMind AI approaches carbon reduction through **behavioral psychology and gamification**:
+* **Cognitive Translation**: Instead of showing abstract numbers, emissions are visualised via the dynamic **Living Earth Canvas** and translated into everyday visual metaphors (e.g., "This matches the carbon offset of 14 mature Neem trees").
+* **Low-Friction Simulator**: Users can test lifestyle changes with interactive controls and see results in real-time, encouraging active experimentation rather than passive tracking.
+* **Smart Contextual AI**: Vertex AI customizes recommendations based on user profiles rather than static, pre-defined templates.
+
+### Assumptions Made
+1. **Grid Emission Factor**: We assume India's grid emission intensity is approximately **0.82 kg CO2 per kWh** based on CEA (Central Electricity Authority) statistics, representing the high coal dependency of the national grid.
+2. **Transportation**: Average fuel efficiencies are based on common Indian vehicle types (e.g., standard commuter 110-150cc two-wheelers getting 45-50 km/l, average petrol hatchbacks getting 15 km/l).
+3. **Metaphor Conversions**: We assume a standard domestic LPG cylinder (14.2 kg LPG) releases roughly **42.6 kg CO2** upon full combustion.
+4. **Assessment Frequency**: User assessments are assumed to represent a typical weekly or monthly average of the user's habits, which is scaled to show annual impacts in the simulator.
+
