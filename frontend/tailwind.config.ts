@@ -10,25 +10,25 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#080d0a", # Deep Eco Dark Forest Background
+        background: "#080d0a", // Deep Eco Dark Forest Background
         foreground: "#f2f7f4",
         card: {
-          DEFAULT: "rgba(18, 30, 24, 0.6)", # Glassmorphism translucent green-card
+          DEFAULT: "rgba(18, 30, 24, 0.6)", // Glassmorphism translucent green-card
           foreground: "#f2f7f4",
           border: "rgba(34, 197, 94, 0.2)",
         },
         primary: {
-          DEFAULT: "#10b981", # Emerald Green
+          DEFAULT: "#10b981", // Emerald Green
           hover: "#059669",
           dark: "#064e3b",
           light: "#a7f3d0",
         },
         secondary: {
-          DEFAULT: "#84cc16", # Lime Green
+          DEFAULT: "#84cc16", // Lime Green
           hover: "#65a30d",
         },
         accent: {
-          DEFAULT: "#f59e0b", # Amber/Gold for alerts/points
+          DEFAULT: "#f59e0b", // Amber/Gold for alerts/points
           hover: "#d97706",
         },
         eco: {
