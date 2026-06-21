@@ -201,17 +201,17 @@ export const SimulatorTool = () => {
           <Card className="bg-primary/5 border-primary/20">
             <CardContent className="p-6 grid grid-cols-2 gap-6 items-center">
               <div>
-                <span className="text-xs text-foreground/50 font-bold block uppercase tracking-wider">
+                <span className="text-xs text-foreground/75 font-bold block uppercase tracking-wider">
                   Projected Savings
                 </span>
                 <span className="text-3xl font-extrabold text-primary flex items-center gap-1.5 mt-1">
                   <TrendingDown className="h-6 w-6" />
-                  {savings.toFixed(1)} <span className="text-xs font-semibold text-foreground/50">kg CO₂e/mo</span>
+                  {savings.toFixed(1)} <span className="text-xs font-semibold text-foreground/75">kg CO₂e/mo</span>
                 </span>
               </div>
               
               <div className="border-l border-card-border/45 pl-6">
-                <span className="text-xs text-foreground/50 font-bold block uppercase tracking-wider">
+                <span className="text-xs text-foreground/75 font-bold block uppercase tracking-wider">
                   Footprint Reduction
                 </span>
                 <span className="text-3xl font-extrabold text-secondary mt-1">

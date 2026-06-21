@@ -116,11 +116,11 @@ export const DashboardOverview = () => {
                 <p className="text-sm text-foreground/80 leading-relaxed">{profile.persona.summary}</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t border-card-border/40">
                   <div>
-                    <span className="text-xs text-foreground/50 block font-semibold">Primary Footprint Driver</span>
+                    <span className="text-xs text-foreground/75 block font-semibold">Primary Footprint Driver</span>
                     <span className="text-sm text-eco-toxic font-bold">{profile.persona.topEmissionsSource}</span>
                   </div>
                   <div>
-                    <span className="text-xs text-foreground/50 block font-semibold">Quickest Green Opportunity</span>
+                    <span className="text-xs text-foreground/75 block font-semibold">Quickest Green Opportunity</span>
                     <span className="text-sm text-primary font-bold">{profile.persona.primaryOpportunity}</span>
                   </div>
                 </div>
@@ -140,7 +140,7 @@ export const DashboardOverview = () => {
             <CardContent className="space-y-6">
               <div className="flex justify-between items-baseline">
                 <span className="text-4xl font-extrabold text-foreground">{carbonScore?.totalMonthly || 340}</span>
-                <span className="text-sm font-semibold text-foreground/50">kg CO₂e / month</span>
+                <span className="text-sm font-semibold text-foreground/75">kg CO₂e / month</span>
               </div>
 
               {/* sector-wise progress bars */}
@@ -184,17 +184,17 @@ export const DashboardOverview = () => {
               <div className="flex flex-col items-center p-2 rounded-xl bg-card-border/20 border border-card-border/40">
                 <Flame className="text-eco-toxic h-7 w-7 mb-1.5" />
                 <span className="text-lg font-bold block">{carbonScore?.equivalencies?.lpgCylindersUsed || 8}</span>
-                <span className="text-[10px] text-foreground/50 leading-tight">LPG Cylinders Burnt</span>
+                <span className="text-[10px] text-foreground/75 leading-tight">LPG Cylinders Burnt</span>
               </div>
               <div className="flex flex-col items-center p-2 rounded-xl bg-card-border/20 border border-card-border/40">
                 <TreePine className="text-primary h-7 w-7 mb-1.5" />
                 <span className="text-lg font-bold block">{carbonScore?.equivalencies?.treesPlantedToOffset || 188}</span>
-                <span className="text-[10px] text-foreground/50 leading-tight">Trees Needed / Month</span>
+                <span className="text-[10px] text-foreground/75 leading-tight">Trees Needed / Month</span>
               </div>
               <div className="flex flex-col items-center p-2 rounded-xl bg-card-border/20 border border-card-border/40">
                 <Home className="text-secondary h-7 w-7 mb-1.5" />
                 <span className="text-lg font-bold block">{carbonScore?.equivalencies?.homesPoweredForMonth || 1.8}</span>
-                <span className="text-[10px] text-foreground/50 leading-tight">Households Powered</span>
+                <span className="text-[10px] text-foreground/75 leading-tight">Households Powered</span>
               </div>
             </CardContent>
           </Card>
@@ -214,7 +214,7 @@ export const DashboardOverview = () => {
                   <p className="text-xs text-foreground/60">Chat about lifestyle changes</p>
                 </div>
               </div>
-              <ArrowRight className="text-foreground/40 group-hover:text-primary transition duration-300 h-5 w-5" />
+              <ArrowRight className="text-foreground/65 group-hover:text-primary transition duration-300 h-5 w-5" />
             </div>
           </Link>
 
@@ -227,7 +227,7 @@ export const DashboardOverview = () => {
                   <p className="text-xs text-foreground/60">Preview projected reductions</p>
                 </div>
               </div>
-              <ArrowRight className="text-foreground/40 group-hover:text-secondary transition duration-300 h-5 w-5" />
+              <ArrowRight className="text-foreground/65 group-hover:text-secondary transition duration-300 h-5 w-5" />
             </div>
           </Link>
 
@@ -240,7 +240,7 @@ export const DashboardOverview = () => {
                   <p className="text-xs text-foreground/60">Compete on leaderboards</p>
                 </div>
               </div>
-              <ArrowRight className="text-foreground/40 group-hover:text-accent transition duration-300 h-5 w-5" />
+              <ArrowRight className="text-foreground/65 group-hover:text-accent transition duration-300 h-5 w-5" />
             </div>
           </Link>
         </div>

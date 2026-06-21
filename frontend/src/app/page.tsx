@@ -53,7 +53,7 @@ export default function LandingPage() {
               <Sparkles className="h-5 w-5" />
             </div>
             <h3 className="font-bold text-foreground">AI Carbon Persona</h3>
-            <p className="text-xs text-foreground/50 leading-relaxed">
+            <p className="text-xs text-foreground/70 leading-relaxed">
               Vertex AI categorizes your footprint (e.g. Conscious Improver) with customized, relatable feedback.
             </p>
           </CardContent>
@@ -65,7 +65,7 @@ export default function LandingPage() {
               <MessageCircle className="h-5 w-5" />
             </div>
             <h3 className="font-bold text-foreground">EcoDeva Coach</h3>
-            <p className="text-xs text-foreground/50 leading-relaxed">
+            <p className="text-xs text-foreground/70 leading-relaxed">
               Interactive chat companion providing localized tips and household analogies for green lifestyle choices.
             </p>
           </CardContent>
@@ -77,7 +77,7 @@ export default function LandingPage() {
               <Sliders className="h-5 w-5" />
             </div>
             <h3 className="font-bold text-foreground">Decision Simulator</h3>
-            <p className="text-xs text-foreground/50 leading-relaxed">
+            <p className="text-xs text-foreground/70 leading-relaxed">
               Slide sliders to project carbon savings instantly and watch the Living Earth landscape adapt in real-time.
             </p>
           </CardContent>
@@ -89,7 +89,7 @@ export default function LandingPage() {
               <Trophy className="h-5 w-5" />
             </div>
             <h3 className="font-bold text-foreground">Community Teams</h3>
-            <p className="text-xs text-foreground/50 leading-relaxed">
+            <p className="text-xs text-foreground/70 leading-relaxed">
               Join environmental challenges, compete on leaderboards, and build sustainable habits together.
             </p>
           </CardContent>

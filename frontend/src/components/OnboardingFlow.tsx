@@ -96,7 +96,7 @@ export const OnboardingFlow = () => {
             <div key={s} className="flex-1 flex items-center">
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
-                  step >= s ? "bg-primary text-background" : "bg-card-border text-foreground/40"
+                  step >= s ? "bg-primary text-background" : "bg-card-border text-foreground/65"
                 }`}
               >
                 {s}
@@ -138,13 +138,17 @@ export const OnboardingFlow = () => {
                   min="0"
                   max="150"
                   value={commuteDist}
+                  aria-valuemin={0}
+                  aria-valuemax={150}
+                  aria-valuenow={commuteDist}
+                  aria-valuetext={`${commuteDist} km`}
                   onChange={(e) => setCommuteDist(Number(e.target.value))}
-                  className="w-full h-2 rounded-lg bg-card-border appearance-none cursor-pointer accent-primary"
+                  className="w-full h-2 rounded-lg bg-card-border appearance-none cursor-pointer accent-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
                 />
 
                 <div className="space-y-2">
                   <label className="block text-sm font-semibold text-foreground/80">Primary Transport Mode</label>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-2 gap-3" role="radiogroup" aria-label="Primary Transport Mode">
                     {[
                       { val: "two_wheeler", label: "Motorcycle / Scooter" },
                       { val: "petrol_car", label: "Petrol Car" },
@@ -157,8 +161,10 @@ export const OnboardingFlow = () => {
                       <button
                         key={mode.val}
                         type="button"
+                        role="radio"
+                        aria-checked={commuteMode === mode.val}
                         onClick={() => setCommuteMode(mode.val)}
-                        className={`p-3 text-left text-sm rounded-xl border transition-all ${
+                        className={`p-3 text-left text-sm rounded-xl border transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background ${
                           commuteMode === mode.val
                             ? "border-primary bg-primary/10 text-primary"
                             : "border-card-border hover:bg-card-border/40 text-foreground/75"
@@ -176,7 +182,7 @@ export const OnboardingFlow = () => {
                     id="ownVehicle"
                     checked={ownVehicle}
                     onChange={(e) => setOwnVehicle(e.target.checked)}
-                    className="h-4 w-4 accent-primary"
+                    className="h-4 w-4 accent-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background rounded"
                   />
                   <label htmlFor="ownVehicle" className="text-sm text-foreground/85">
                     I own this vehicle
@@ -204,7 +210,7 @@ export const OnboardingFlow = () => {
               <div className="space-y-4">
                 <div className="space-y-2">
                   <label className="block text-sm font-semibold text-foreground/80">Dietary Habit</label>
-                  <div className="grid grid-cols-1 gap-3">
+                  <div className="grid grid-cols-1 gap-3" role="radiogroup" aria-label="Dietary Habit">
                     {[
                       { val: "vegan", label: "Vegan (No animal products)" },
                       { val: "vegetarian", label: "Vegetarian (Dairy, no meat/eggs)" },
@@ -215,8 +221,10 @@ export const OnboardingFlow = () => {
                       <button
                         key={opt.val}
                         type="button"
+                        role="radio"
+                        aria-checked={diet === opt.val}
                         onClick={() => setDiet(opt.val)}
-                        className={`p-4 text-left text-sm rounded-xl border transition-all ${
+                        className={`p-4 text-left text-sm rounded-xl border transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background ${
                           diet === opt.val
                             ? "border-primary bg-primary/10 text-primary"
                             : "border-card-border hover:bg-card-border/40 text-foreground/75"
@@ -238,8 +246,12 @@ export const OnboardingFlow = () => {
                     min="0"
                     max="21"
                     value={deliveries}
+                    aria-valuemin={0}
+                    aria-valuemax={21}
+                    aria-valuenow={deliveries}
+                    aria-valuetext={`${deliveries} orders`}
                     onChange={(e) => setDeliveries(Number(e.target.value))}
-                    className="w-full h-2 rounded-lg bg-card-border appearance-none cursor-pointer accent-primary"
+                    className="w-full h-2 rounded-lg bg-card-border appearance-none cursor-pointer accent-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
                   />
                 </div>
               </div>
@@ -272,8 +284,12 @@ export const OnboardingFlow = () => {
                     min="0"
                     max="24"
                     value={acHours}
+                    aria-valuemin={0}
+                    aria-valuemax={24}
+                    aria-valuenow={acHours}
+                    aria-valuetext={`${acHours} hours`}
                     onChange={(e) => setAcHours(Number(e.target.value))}
-                    className="w-full h-2 rounded-lg bg-card-border appearance-none cursor-pointer accent-primary"
+                    className="w-full h-2 rounded-lg bg-card-border appearance-none cursor-pointer accent-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
                   />
                 </div>
 
@@ -288,14 +304,18 @@ export const OnboardingFlow = () => {
                     max="15000"
                     step="100"
                     value={bill}
+                    aria-valuemin={200}
+                    aria-valuemax={15000}
+                    aria-valuenow={bill}
+                    aria-valuetext={`Rs. ${bill}`}
                     onChange={(e) => setBill(Number(e.target.value))}
-                    className="w-full h-2 rounded-lg bg-card-border appearance-none cursor-pointer accent-primary"
+                    className="w-full h-2 rounded-lg bg-card-border appearance-none cursor-pointer accent-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
                   />
                 </div>
 
                 <div className="space-y-2">
                   <label className="block text-sm font-semibold text-foreground/80">Appliance Efficiency Rating</label>
-                  <div className="flex gap-3">
+                  <div className="flex gap-3" role="radiogroup" aria-label="Appliance Efficiency Rating">
                     {[
                       { val: "high_efficiency", label: "5-Star BEE / Highly Efficient" },
                       { val: "average", label: "3-Star / Average" },
@@ -304,8 +324,10 @@ export const OnboardingFlow = () => {
                       <button
                         key={opt.val}
                         type="button"
+                        role="radio"
+                        aria-checked={appliances === opt.val}
                         onClick={() => setAppliances(opt.val)}
-                        className={`flex-1 p-3 text-center text-xs rounded-xl border transition-all ${
+                        className={`flex-1 p-3 text-center text-xs rounded-xl border transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background ${
                           appliances === opt.val
                             ? "border-primary bg-primary/10 text-primary"
                             : "border-card-border hover:bg-card-border/40 text-foreground/75"
@@ -346,8 +368,12 @@ export const OnboardingFlow = () => {
                     min="0"
                     max="30"
                     value={domesticFlights}
+                    aria-valuemin={0}
+                    aria-valuemax={30}
+                    aria-valuenow={domesticFlights}
+                    aria-valuetext={`${domesticFlights} flights`}
                     onChange={(e) => setDomesticFlights(Number(e.target.value))}
-                    className="w-full h-2 rounded-lg bg-card-border appearance-none cursor-pointer accent-primary"
+                    className="w-full h-2 rounded-lg bg-card-border appearance-none cursor-pointer accent-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
                   />
                 </div>
 
@@ -361,8 +387,12 @@ export const OnboardingFlow = () => {
                     min="0"
                     max="10"
                     value={intlFlights}
+                    aria-valuemin={0}
+                    aria-valuemax={10}
+                    aria-valuenow={intlFlights}
+                    aria-valuetext={`${intlFlights} flights`}
                     onChange={(e) => setIntlFlights(Number(e.target.value))}
-                    className="w-full h-2 rounded-lg bg-card-border appearance-none cursor-pointer accent-primary"
+                    className="w-full h-2 rounded-lg bg-card-border appearance-none cursor-pointer accent-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
                   />
                 </div>
               </div>
@@ -395,14 +425,18 @@ export const OnboardingFlow = () => {
                     min="0"
                     max="20"
                     value={onlineShopping}
+                    aria-valuemin={0}
+                    aria-valuemax={20}
+                    aria-valuenow={onlineShopping}
+                    aria-valuetext={`${onlineShopping} orders`}
                     onChange={(e) => setOnlineShopping(Number(e.target.value))}
-                    className="w-full h-2 rounded-lg bg-card-border appearance-none cursor-pointer accent-primary"
+                    className="w-full h-2 rounded-lg bg-card-border appearance-none cursor-pointer accent-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
                   />
                 </div>
 
                 <div className="space-y-2">
                   <label className="block text-sm font-semibold text-foreground/80">Clothing Behavior</label>
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-3 gap-3" role="radiogroup" aria-label="Clothing Behavior">
                     {[
                       { val: "fast_fashion", label: "Fast Fashion (Frequent shopping)" },
                       { val: "sustainable", label: "Eco-Conscious / Slow Fashion" },
@@ -411,8 +445,10 @@ export const OnboardingFlow = () => {
                       <button
                         key={opt.val}
                         type="button"
+                        role="radio"
+                        aria-checked={clothingHabit === opt.val}
                         onClick={() => setClothingHabit(opt.val)}
-                        className={`p-3 text-center text-xs rounded-xl border transition-all ${
+                        className={`p-3 text-center text-xs rounded-xl border transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background ${
                           clothingHabit === opt.val
                             ? "border-primary bg-primary/10 text-primary"
                             : "border-card-border hover:bg-card-border/40 text-foreground/75"

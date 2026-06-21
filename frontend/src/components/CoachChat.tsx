@@ -133,7 +133,7 @@ export const CoachChat = () => {
               <div className="w-8 h-8 rounded-full bg-primary/20 border border-primary/30 text-primary flex items-center justify-center animate-spin">
                 <RefreshCw className="h-4 w-4" />
               </div>
-              <div className="bg-card/40 border border-card-border/30 px-4 py-2 rounded-2xl rounded-tl-none text-xs text-foreground/50 italic">
+              <div className="bg-card/40 border border-card-border/30 px-4 py-2 rounded-2xl rounded-tl-none text-xs text-foreground/75 italic">
                 EcoDeva is evaluating your carbon profile...
               </div>
             </motion.div>

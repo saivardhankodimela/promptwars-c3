@@ -220,7 +220,12 @@ export const LivingEarth = ({ score }: LivingEarthProps) => {
 
   return (
     <div className="w-full h-full relative overflow-hidden rounded-2xl border border-card-border bg-[#080d0a]/60">
-      <canvas ref={canvasRef} className="w-full h-full block">
+      <canvas
+        ref={canvasRef}
+        className="w-full h-full block"
+        role="img"
+        aria-label={`Living Earth canvas visualizer. Current environmental health score is ${score}/100. A high score shows leafy trees, clear blue skies, clean river water, and wildlife, while a low score simulates smog, withered branches, soot, and polluted grey water.`}
+      >
         Visual representation of the Earth's environment. A higher sustainability score of {score}/100 renders a clean sky, leafy trees, clear river, and flying wildlife. A lower score renders smog, soot particles, dry branches, and polluted grey water.
       </canvas>
       <div className="absolute top-4 left-4 bg-background/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-card-border">

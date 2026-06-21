@@ -195,7 +195,7 @@ export const Leaderboard = () => {
                       <CardTitle className="text-base mt-2">{c.title}</CardTitle>
                       <CardDescription className="text-xs">{c.description}</CardDescription>
                     </CardHeader>
-                    <CardContent className="pt-0 flex justify-between items-center text-xs text-foreground/50 border-t border-card-border/40 mt-4 pt-3">
+                    <CardContent className="pt-0 flex justify-between items-center text-xs text-foreground/75 border-t border-card-border/40 mt-4 pt-3">
                       <span>{c.participantsCount} active participants</span>
                       <Button
                         variant={isJoined ? "outline" : "primary"}
@@ -229,7 +229,7 @@ export const Leaderboard = () => {
             <CardContent className="p-0">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-card-border/20 border-b border-card-border/40 text-xs text-foreground/50 font-bold uppercase tracking-wider">
+                  <tr className="bg-card-border/20 border-b border-card-border/40 text-xs text-foreground/75 font-bold uppercase tracking-wider">
                     <th className="py-3 px-6 text-center w-16">Rank</th>
                     <th className="py-3 px-6">User</th>
                     <th className="py-3 px-6 text-center">Active Streak</th>
@@ -259,7 +259,7 @@ export const Leaderboard = () => {
                           )}
                         </td>
                         <td className="py-4 px-6 flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-card-border flex items-center justify-center text-foreground/40 text-xs border border-card-border">
+                          <div className="w-8 h-8 rounded-full bg-card-border flex items-center justify-center text-foreground/65 text-xs border border-card-border">
                             {entry.photoURL ? (
                               // eslint-disable-next-line @next/next/no-img-element
                               <img src={entry.photoURL} alt={entry.displayName} className="rounded-full" />

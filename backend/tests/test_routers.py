@@ -279,3 +279,137 @@ def test_get_latest_story(mock_get_story):
     response = client.get("/api/v1/ai/story/latest")
     assert response.status_code == 200
     assert response.json()["title"] == "Banyan Tree Shield"
+
+@patch("app.services.firebase_service.firebase_service.get_latest_carbon_score")
+def test_get_current_footprint_success(mock_get_score):
+    mock_get_score.return_value = {
+        "uid": "test-user-123",
+        "timestamp": "2026-06-21T00:00:00Z",
+        "breakdown": {
+            "transportation": 20.0,
+            "food": 30.0,
+            "energy": 40.0,
+            "travel": 10.0,
+            "shopping": 5.0
+        },
+        "totalMonthly": 105.0,
+        "equivalencies": {
+            "homesPoweredForMonth": 1.2,
+            "treesPlantedToOffset": 5.0,
+            "lpgCylindersUsed": 2.5
+        }
+    }
+    response = client.get("/api/v1/carbon/current")
+    assert response.status_code == 200
+    assert response.json()["totalMonthly"] == 105.0
+
+@patch("app.services.firebase_service.firebase_service.get_latest_carbon_score")
+def test_get_current_footprint_not_found(mock_get_score):
+    mock_get_score.return_value = None
+    response = client.get("/api/v1/carbon/current")
+    assert response.status_code == 404
+    assert "complete the onboarding assessment" in response.json()["detail"]
+
+@patch("app.services.firebase_service.firebase_service.get_carbon_history")
+def test_get_footprint_history(mock_get_scores):
+    mock_get_scores.return_value = [
+        {
+            "uid": "test-user-123",
+            "timestamp": "2026-06-21T00:00:00Z",
+            "breakdown": {
+                "transportation": 20.0,
+                "food": 30.0,
+                "energy": 40.0,
+                "travel": 10.0,
+                "shopping": 5.0
+            },
+            "totalMonthly": 105.0,
+            "equivalencies": {
+                "homesPoweredForMonth": 1.2,
+                "treesPlantedToOffset": 5.0,
+                "lpgCylindersUsed": 2.5
+            }
+        }
+    ]
+    response = client.get("/api/v1/carbon/history")
+    assert response.status_code == 200
+    assert len(response.json()["scores"]) == 1
+    assert response.json()["scores"][0]["totalMonthly"] == 105.0
+
+@patch("app.services.challenge_service.challenge_service.get_user_active_challenges")
+def test_get_user_active_challenges(mock_active):
+    mock_active.return_value = [
+        UserChallengeResponse(
+            id="test-user-123_test_challenge",
+            uid="test-user-123",
+            challengeId="test_challenge",
+            status="joined",
+            progress=40.0,
+            joinedAt="2026-06-21T00:00:00Z",
+            completedAt=None
+        )
+    ]
+    response = client.get("/api/v1/challenges/active")
+    assert response.status_code == 200
+    assert len(response.json()) == 1
+    assert response.json()[0]["challengeId"] == "test_challenge"
+    assert response.json()[0]["progress"] == 40.0
+
+@patch("app.services.firebase_service.firebase_service.get_assessment")
+@patch("app.services.firebase_service.firebase_service.get_latest_carbon_score")
+def test_simulate_decisions_missing_onboarding(mock_get_score, mock_get_assessment):
+    mock_get_assessment.return_value = None
+    mock_get_score.return_value = None
+    response = client.post("/api/v1/ai/simulate", json={
+        "reduceAcHours": 1.0,
+        "useMetroWeekly": 2,
+        "reduceDeliveryWeekly": 1,
+        "reduceFlightsAnnual": 1
+    })
+    assert response.status_code == 400
+    assert "Onboarding assessment is required" in response.json()["detail"]
+
+@patch("app.services.firebase_service.firebase_service.get_profile")
+@patch("app.services.firebase_service.firebase_service.get_latest_carbon_score")
+def test_generate_weekly_story_missing_history(mock_get_score, mock_get_profile):
+    mock_get_profile.return_value = {"uid": "test-user-123"}
+    mock_get_score.return_value = None
+    response = client.post("/api/v1/ai/story/generate")
+    assert response.status_code == 400
+    assert "Carbon score history is empty" in response.json()["detail"]
+
+@patch("app.services.challenge_service.challenge_service.join_user_challenge")
+def test_join_challenge_not_found(mock_join):
+    mock_join.side_effect = ValueError("Challenge does not exist")
+    response = client.post("/api/v1/challenges/invalid_challenge/join")
+    assert response.status_code == 404
+    assert response.json()["detail"] == "Challenge does not exist"
+
+@patch("app.services.challenge_service.challenge_service.update_user_challenge_progress")
+def test_update_challenge_progress_not_joined(mock_update):
+    mock_update.side_effect = ValueError("User has not joined this challenge")
+    response = client.post(
+        "/api/v1/challenges/test_challenge/progress",
+        json={"progress": 50.0}
+    )
+    assert response.status_code == 400
+    assert response.json()["detail"] == "User has not joined this challenge"
+
+@patch("app.services.firebase_service.firebase_service.get_profile")
+@patch("app.services.firebase_service.firebase_service.init_profile")
+def test_get_profile_missing_initializes(mock_init_profile, mock_get_profile):
+    mock_get_profile.return_value = None
+    mock_init_profile.return_value = {
+        "uid": "test-user-123",
+        "displayName": "Test User",
+        "photoURL": "http://mock-photo.com/user.jpg",
+        "persona": None,
+        "score": 50.0,
+        "points": 100,
+        "streak": 1,
+    }
+    response = client.get("/api/v1/auth/profile")
+    assert response.status_code == 200
+    assert response.json()["uid"] == "test-user-123"
+    mock_init_profile.assert_called_once()
+

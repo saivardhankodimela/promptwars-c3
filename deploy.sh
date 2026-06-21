@@ -28,6 +28,10 @@ fi
 # Submit Build to Google Cloud Build
 echo "Submitting build to Google Cloud Build..."
 
+PROJECT_NUMBER=$(gcloud projects describe $PROJECT_ID --format="value(projectNumber)")
+BACKEND_URL="https://ecomind-backend-${PROJECT_NUMBER}.asia-south1.run.app/api/v1"
+echo "Constructed Backend API URL: $BACKEND_URL"
+
 SUBSTITUTIONS=""
 if [ -f "frontend/.env.local" ]; then
     echo "Loading environment variables from frontend/.env.local..."
@@ -45,14 +49,16 @@ if [ -f "frontend/.env.local" ]; then
         PROJECT_ID_ENV=$PROJECT_ID
     fi
 
-    SUBSTITUTIONS="_FIREBASE_API_KEY=${API_KEY},_FIREBASE_AUTH_DOMAIN=${AUTH_DOMAIN},_FIREBASE_PROJECT_ID=${PROJECT_ID_ENV},_FIREBASE_STORAGE_BUCKET=${STORAGE_BUCKET},_FIREBASE_MESSAGING_SENDER_ID=${MESSAGING_SENDER_ID},_FIREBASE_APP_ID=${APP_ID}"
+    SUBSTITUTIONS="_FIREBASE_API_KEY=${API_KEY},_FIREBASE_AUTH_DOMAIN=${AUTH_DOMAIN},_FIREBASE_PROJECT_ID=${PROJECT_ID_ENV},_FIREBASE_STORAGE_BUCKET=${STORAGE_BUCKET},_FIREBASE_MESSAGING_SENDER_ID=${MESSAGING_SENDER_ID},_FIREBASE_APP_ID=${APP_ID},_NEXT_PUBLIC_API_URL=${BACKEND_URL}"
+else
+    SUBSTITUTIONS="_NEXT_PUBLIC_API_URL=${BACKEND_URL}"
 fi
 
 if [ -n "$SUBSTITUTIONS" ]; then
     echo "Running build with substitutions..."
     gcloud builds submit --config=cloudbuild.yaml --substitutions="$SUBSTITUTIONS" .
 else
-    echo "No local environment variables found. Running build with default placeholders..."
+    echo "No substitutions compiled. Running build with default placeholders..."
     gcloud builds submit --config=cloudbuild.yaml .
 fi
 

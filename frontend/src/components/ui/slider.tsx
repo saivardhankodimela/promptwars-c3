@@ -42,8 +42,12 @@ export const Slider = ({
         max={max}
         step={step}
         value={value}
+        aria-valuemin={min}
+        aria-valuemax={max}
+        aria-valuenow={value}
+        aria-valuetext={displayValue || `${value}`}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="w-full h-2 rounded-lg bg-card-border appearance-none cursor-pointer accent-primary focus:outline-none"
+        className="w-full h-2 rounded-lg bg-card-border appearance-none cursor-pointer accent-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
         {...props}
       />
     </div>

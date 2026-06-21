@@ -70,7 +70,7 @@ export default function LoginPage() {
           {/* Email / Password Form */}
           <form onSubmit={handleEmailAuth} className="space-y-4">
             <div className="space-y-1.5">
-              <label htmlFor="emailInput" className="text-xs font-bold text-foreground/70 uppercase tracking-wider">Email Address</label>
+              <label htmlFor="emailInput" className="text-xs font-bold text-foreground/75 uppercase tracking-wider">Email Address</label>
               <input
                 id="emailInput"
                 type="email"
@@ -78,12 +78,12 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full bg-background border border-card-border/80 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary/80 transition text-foreground"
+                className="w-full bg-background border border-card-border/80 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background transition text-foreground"
               />
             </div>
             
             <div className="space-y-1.5">
-              <label htmlFor="passwordInput" className="text-xs font-bold text-foreground/70 uppercase tracking-wider">Password</label>
+              <label htmlFor="passwordInput" className="text-xs font-bold text-foreground/75 uppercase tracking-wider">Password</label>
               <input
                 id="passwordInput"
                 type="password"
@@ -91,10 +91,10 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full bg-background border border-card-border/80 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary/80 transition text-foreground"
+                className="w-full bg-background border border-card-border/80 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background transition text-foreground"
               />
             </div>
-
+ 
             <Button
               type="submit"
               variant="primary"
@@ -104,19 +104,19 @@ export default function LoginPage() {
               {authMode === "login" ? "Log In" : "Sign Up"}
             </Button>
           </form>
-
+ 
           {/* Switch Mode */}
-          <div className="text-center text-xs text-foreground/50">
+          <div className="text-center text-xs text-foreground/75">
             {authMode === "login" ? "Don't have an account? " : "Already have an account? "}
             <button
               onClick={() => setAuthMode(authMode === "login" ? "signup" : "login")}
-              className="text-primary font-bold hover:underline transition"
+              className="text-primary font-bold hover:underline transition focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background rounded"
             >
               {authMode === "login" ? "Sign Up" : "Log In"}
             </button>
           </div>
-
-          <div className="relative my-4 flex items-center justify-center text-xs uppercase text-foreground/30 font-bold">
+ 
+          <div className="relative my-4 flex items-center justify-center text-xs uppercase text-foreground/60 font-bold">
             <div className="absolute inset-0 flex items-center"><span className="w-full border-t border-card-border/50"></span></div>
             <span className="relative bg-[#080d0a] px-3">or</span>
           </div>
