@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
 import { User, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
 import { auth, googleProvider } from "@/utils/firebase";
 import { api } from "@/utils/api";
@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  const syncProfile = async () => {
+  const syncProfile = useCallback(async () => {
     try {
       // Trigger backend user sync
       const res: any = await api.post("/auth/sync");
@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     } catch (err) {
       console.error("Error syncing user profile with backend:", err);
     }
-  };
+  }, [router]);
 
   const refreshProfile = async () => {
     try {
@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [syncProfile]);
 
   const loginWithGoogle = async () => {
     setLoading(true);

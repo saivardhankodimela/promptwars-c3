@@ -5,7 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Leaf, LogIn } from "lucide-react";
+import { Leaf } from "lucide-react";
 import { auth } from "@/utils/firebase";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 
@@ -23,7 +23,7 @@ export default function LoginPage() {
     if (user) {
       router.push("/dashboard");
     }
-  }, [user]);
+  }, [user, router]);
 
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,8 +70,9 @@ export default function LoginPage() {
           {/* Email / Password Form */}
           <form onSubmit={handleEmailAuth} className="space-y-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-foreground/70 uppercase tracking-wider">Email Address</label>
+              <label htmlFor="emailInput" className="text-xs font-bold text-foreground/70 uppercase tracking-wider">Email Address</label>
               <input
+                id="emailInput"
                 type="email"
                 placeholder="yourname@gmail.com"
                 value={email}
@@ -82,8 +83,9 @@ export default function LoginPage() {
             </div>
             
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-foreground/70 uppercase tracking-wider">Password</label>
+              <label htmlFor="passwordInput" className="text-xs font-bold text-foreground/70 uppercase tracking-wider">Password</label>
               <input
+                id="passwordInput"
                 type="password"
                 placeholder="••••••••"
                 value={password}

@@ -1,7 +1,4 @@
-"use client";
-
 import React from "react";
-import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 interface SliderProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange"> {
@@ -26,19 +23,20 @@ export const Slider = ({
   id,
   ...props
 }: SliderProps) => {
-  const generatedId = id || React.useId();
+  const generatedId = React.useId();
+  const actualId = id || generatedId;
   return (
     <div className={twMerge("flex flex-col space-y-2 w-full", className)}>
       <div className="flex justify-between items-center text-sm">
         {label && (
-          <label htmlFor={generatedId} className="font-semibold text-foreground/80">
+          <label htmlFor={actualId} className="font-semibold text-foreground/80">
             {label}
           </label>
         )}
         {displayValue && <span className="font-mono text-primary font-bold">{displayValue}</span>}
       </div>
       <input
-        id={generatedId}
+        id={actualId}
         type="range"
         min={min}
         max={max}

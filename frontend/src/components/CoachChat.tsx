@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { api } from "@/utils/api";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "./ui/card";
 import { Button } from "./ui/button";
-import { MessageSquare, Send, Sparkles, User, RefreshCw } from "lucide-react";
+import { Send, Sparkles, User, RefreshCw } from "lucide-react";
 
 interface Message {
   role: "user" | "assistant";

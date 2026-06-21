@@ -7,7 +7,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { useRouter } from "next/navigation";
-import { ShieldAlert, Car, Apple, Zap, Plane, ShoppingBag } from "lucide-react";
+import { Car, Apple, Zap, Plane, ShoppingBag } from "lucide-react";
 import confetti from "canvas-confetti";
 
 export const OnboardingFlow = () => {

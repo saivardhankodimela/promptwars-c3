@@ -6,7 +6,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "./ui/
 import { Button } from "./ui/button";
 import { Slider } from "./ui/slider";
 import { LivingEarth } from "./LivingEarth";
-import { Sparkles, TrendingDown, Leaf, HelpCircle, Activity } from "lucide-react";
+import { Sparkles, TrendingDown, Leaf, Activity } from "lucide-react";
 
 export const SimulatorTool = () => {
   const [currentScore, setCurrentScore] = useState<any | null>(null);

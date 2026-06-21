@@ -13,7 +13,7 @@ export default function ChallengesPage() {
     if (!loading && !user) {
       router.push("/login");
     }
-  }, [user, loading]);
+  }, [user, loading, router]);
 
   if (loading || !user) {
     return (

@@ -23,7 +23,7 @@ export const DashboardOverview = () => {
       let story = null;
       try {
         story = await api.get<any>("/ai/story/latest");
-      } catch (err) {
+      } catch {
         console.log("No existing story found, generating a new one.");
       }
 
