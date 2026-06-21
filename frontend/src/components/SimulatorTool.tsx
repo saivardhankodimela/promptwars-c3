@@ -6,6 +6,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "./ui/
 import { Button } from "./ui/button";
 import { Slider } from "./ui/slider";
 import { LivingEarth } from "./LivingEarth";
+import { CARBON_CONSTANTS } from "@/utils/constants";
 import { Sparkles, TrendingDown, Leaf, Activity } from "lucide-react";
 
 export const SimulatorTool = () => {
@@ -46,26 +47,19 @@ export const SimulatorTool = () => {
     const base = JSON.parse(JSON.stringify(currentScore));
 
     // 1. AC Reduction
-    // AC consumes ~1.5 kW. India grid = 0.82 kg/kWh.
-    const acReduction = reduceAc * 30 * 1.5 * 0.82;
+    const acReduction = reduceAc * 30 * CARBON_CONSTANTS.AC_POWER_KW * CARBON_CONSTANTS.GRID_INTENSITY_KG_PER_KWH;
     base.breakdown.energy = Math.max(0, base.breakdown.energy - acReduction);
 
     // 2. Metro commutes
-    // Switching T trips weekly. Metro = 0.032, Petrol car = 0.143 (average saving 0.11 kg/km)
-    // commute distance assumed 15km if not fetched, otherwise we estimate savings based on average
-    const commuteSavingRate = 0.11; // kg saved per km by switching to public transport
-    const commuteDist = 15.0; // standard fallback
-    const transportSaving = useMetro * 4.33 * commuteDist * commuteSavingRate;
+    const transportSaving = useMetro * CARBON_CONSTANTS.WEEKS_PER_MONTH * CARBON_CONSTANTS.DEFAULT_COMMUTE_DIST_KM * CARBON_CONSTANTS.COMMUTE_SAVING_RATE;
     base.breakdown.transportation = Math.max(0, base.breakdown.transportation - transportSaving);
 
     // 3. Deliveries
-    // Delivery savings = 1.5 kg per order
-    const deliverySaving = reduceDelivery * 4.33 * 1.5;
+    const deliverySaving = reduceDelivery * CARBON_CONSTANTS.WEEKS_PER_MONTH * CARBON_CONSTANTS.DELIVERY_VEHICLE_KG;
     base.breakdown.food = Math.max(0, base.breakdown.food - deliverySaving);
 
     // 4. Flights
-    // Flight saving = 200 kg per domestic flight
-    const flightSaving = (reduceFlights * 200.0) / 12.0;
+    const flightSaving = (reduceFlights * CARBON_CONSTANTS.FLIGHT_DOMESTIC_KG) / 12.0;
     base.breakdown.travel = Math.max(0, base.breakdown.travel - flightSaving);
 
     const total = 

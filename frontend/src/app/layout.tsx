@@ -21,9 +21,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${outfit.variable}`}>
       <body>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-primary focus:text-background focus:rounded-lg focus:font-bold focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
+        >
+          Skip to main content
+        </a>
         <Providers>
           <Navigation />
-          <main className="min-h-[calc(100vh-4rem)] pb-12">{children}</main>
+          <main id="main-content" className="min-h-[calc(100vh-4rem)] pb-12 outline-none" tabIndex={-1}>
+            {children}
+          </main>
         </Providers>
       </body>
     </html>

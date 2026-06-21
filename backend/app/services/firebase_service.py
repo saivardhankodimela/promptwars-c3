@@ -8,13 +8,18 @@ logger = logging.getLogger("ecomind")
 
 class FirebaseService:
     def __init__(self):
-        self.db = firestore.client()
+        self._db = None
         self._bucket = None
+
+    @property
+    def db(self):
+        if self._db is None:
+            self._db = firestore.client()
+        return self._db
 
     @property
     def bucket(self):
         if not self._bucket:
-            # Lazy initialize the storage bucket
             self._bucket = storage.bucket()
         return self._bucket
 
@@ -93,10 +98,11 @@ class FirebaseService:
                 else:
                     last_active_dt = datetime.fromisoformat(str(last_active))
                 
+                now = datetime.now(timezone.utc)
                 if last_active_dt.tzinfo is not None:
-                    diff = datetime.now(timezone.utc) - last_active_dt
+                    diff = now - last_active_dt
                 else:
-                    diff = datetime.utcnow() - last_active_dt
+                    diff = now - last_active_dt.replace(tzinfo=timezone.utc)
                 if diff.days == 1:
                     streak += 1
                 elif diff.days > 1:

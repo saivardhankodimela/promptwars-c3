@@ -2,6 +2,7 @@ import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
+from app.middleware import RateLimitMiddleware
 from app.routers import auth, assessment, carbon, ai, challenges
 
 # Configure Logger
@@ -25,6 +26,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Add rate limiting for AI endpoints
+app.add_middleware(RateLimitMiddleware, requests_per_minute=20)
 
 # Register Routers
 app.include_router(auth.router, prefix="/api/v1")
