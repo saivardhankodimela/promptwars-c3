@@ -157,3 +157,20 @@ async def generate_weekly_story(current_user: dict = Depends(get_current_user)):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Failed to generate weekly story."
         )
+
+@router.get("/story/latest", response_model=StoryResponse | None)
+async def get_latest_story(current_user: dict = Depends(get_current_user)):
+    """
+    Retrieves the user's latest generated weekly sustainability story.
+    """
+    try:
+        uid = current_user["uid"]
+        story = firebase_service.get_latest_story(uid)
+        return story
+    except Exception as e:
+        logger.error(f"Failed to retrieve latest story: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to retrieve latest story."
+        )
+

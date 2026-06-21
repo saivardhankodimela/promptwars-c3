@@ -1,22 +1,38 @@
 steps:
   # 1. Build the Backend Docker Image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/ecomind-backend:latest', './backend']
+    args: ['build', '-t', 'asia-south1-docker.pkg.dev/$PROJECT_ID/ecomind-repo/ecomind-backend:latest', './backend']
     id: 'build-backend'
 
   # 2. Build the Frontend Docker Image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/ecomind-frontend:latest', './frontend']
+    args:
+      - 'build'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyACWbKPjcsB32AevW5QSH2dM6qIYel3pcI'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=promptwars-c3.firebaseapp.com'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_FIREBASE_PROJECT_ID=$PROJECT_ID'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=promptwars-c3.firebasestorage.app'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=628439194177'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_FIREBASE_APP_ID=1:628439194177:web:79fa6b3d4706411bc984c0'
+      - '-t'
+      - 'asia-south1-docker.pkg.dev/$PROJECT_ID/ecomind-repo/ecomind-frontend:latest'
+      - './frontend'
     id: 'build-frontend'
 
   # 3. Push Backend Image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/ecomind-backend:latest']
+    args: ['push', 'asia-south1-docker.pkg.dev/$PROJECT_ID/ecomind-repo/ecomind-backend:latest']
     id: 'push-backend'
 
   # 4. Push Frontend Image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/ecomind-frontend:latest']
+    args: ['push', 'asia-south1-docker.pkg.dev/$PROJECT_ID/ecomind-repo/ecomind-frontend:latest']
     id: 'push-frontend'
 
   # 5. Deploy Backend to Google Cloud Run
@@ -26,7 +42,7 @@ steps:
       - 'run'
       - 'deploy'
       - 'ecomind-backend'
-      - '--image=gcr.io/$PROJECT_ID/ecomind-backend:latest'
+      - '--image=asia-south1-docker.pkg.dev/$PROJECT_ID/ecomind-repo/ecomind-backend:latest'
       - '--region=asia-south1'
       - '--platform=managed'
       - '--port=8080'
@@ -42,7 +58,7 @@ steps:
       - 'run'
       - 'deploy'
       - 'ecomind-frontend'
-      - '--image=gcr.io/$PROJECT_ID/ecomind-frontend:latest'
+      - '--image=asia-south1-docker.pkg.dev/$PROJECT_ID/ecomind-repo/ecomind-frontend:latest'
       - '--region=asia-south1'
       - '--platform=managed'
       - '--port=8080'
@@ -51,5 +67,5 @@ steps:
     id: 'deploy-frontend'
 
 images:
-  - 'gcr.io/$PROJECT_ID/ecomind-backend:latest'
-  - 'gcr.io/$PROJECT_ID/ecomind-frontend:latest'
+  - 'asia-south1-docker.pkg.dev/$PROJECT_ID/ecomind-repo/ecomind-backend:latest'
+  - 'asia-south1-docker.pkg.dev/$PROJECT_ID/ecomind-repo/ecomind-frontend:latest'

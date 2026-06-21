@@ -1,5 +1,5 @@
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from firebase_admin import firestore, storage
 from google.cloud.firestore_v1.base_query import FieldFilter
 from app.config import settings
@@ -66,7 +66,12 @@ class FirebaseService:
             "updatedAt": firestore.SERVER_TIMESTAMP
         })
         
-        return profile_data
+        # Replace Sentinel with standard datetime for serialization
+        response_data = profile_data.copy()
+        now_dt = datetime.now(timezone.utc)
+        response_data["lastActive"] = now_dt
+        response_data["createdAt"] = now_dt
+        return response_data
 
     def update_profile_score(self, uid: str, score: float, points_added: int, update_streak: bool = False) -> dict:
         profile_ref = self.db.collection("profiles").document(uid)
@@ -88,7 +93,10 @@ class FirebaseService:
                 else:
                     last_active_dt = datetime.fromisoformat(str(last_active))
                 
-                diff = datetime.utcnow() - last_active_dt.replace(tzinfo=None)
+                if last_active_dt.tzinfo is not None:
+                    diff = datetime.now(timezone.utc) - last_active_dt
+                else:
+                    diff = datetime.utcnow() - last_active_dt
                 if diff.days == 1:
                     streak += 1
                 elif diff.days > 1:
@@ -111,7 +119,9 @@ class FirebaseService:
             "updatedAt": firestore.SERVER_TIMESTAMP
         })
 
+        # Replace Sentinel with standard datetime for serialization
         profile_data.update(updates)
+        profile_data["lastActive"] = datetime.now(timezone.utc)
         return profile_data
 
     def save_persona(self, uid: str, persona: dict) -> None:
@@ -280,7 +290,11 @@ class FirebaseService:
         
         # Increment challenge participant count
         challenge_ref.update({"participantsCount": firestore.Increment(1)})
-        return data
+        
+        # Replace Sentinel with standard datetime for serialization
+        response_data = data.copy()
+        response_data["joinedAt"] = datetime.now(timezone.utc)
+        return response_data
 
     def update_challenge_progress(self, uid: str, challenge_id: str, progress: float) -> dict:
         user_challenge_id = f"{uid}_{challenge_id}"
@@ -317,6 +331,10 @@ class FirebaseService:
         }
         user_challenge_ref.update(updates)
         data.update(updates)
+        
+        # Replace Sentinel with standard datetime for serialization
+        if completed_at == firestore.SERVER_TIMESTAMP:
+            data["completedAt"] = datetime.now(timezone.utc)
         return data
 
     def get_leaderboard(self, limit: int = 15) -> list[dict]:

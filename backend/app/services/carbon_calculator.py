@@ -1,6 +1,6 @@
 from app.schemas.assessment import AssessmentSubmitSchema
 from app.schemas.carbon import CarbonBreakdown, CarbonEquivalencies, CarbonScoreResponse
-from datetime import datetime
+from datetime import datetime, timezone
 
 # Indian context specific emission factors (kg CO2e)
 GRID_INTENSITY_KG_PER_KWH = 0.82   # High reliance on coal in Indian power grid
@@ -106,7 +106,7 @@ def calculate_carbon_footprint(uid: str, assessment: AssessmentSubmitSchema) -> 
 
     return CarbonScoreResponse(
         uid=uid,
-        timestamp=datetime.utcnow(),
+        timestamp=datetime.now(timezone.utc),
         breakdown=breakdown,
         totalMonthly=round(total_monthly, 2),
         equivalencies=equivalencies

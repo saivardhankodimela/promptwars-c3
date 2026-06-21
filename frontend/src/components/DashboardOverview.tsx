@@ -20,10 +20,21 @@ export const DashboardOverview = () => {
       const carbon = await api.get<any>("/carbon/current");
       setCarbonScore(carbon);
       
-      const story = await api.get<any>("/ai/story/generate").catch(() => {
-        // Fallback to fetch latest stored story if generation fails/already exists
-        return api.get<any>("/ai/story/latest").catch(() => null);
-      });
+      let story = null;
+      try {
+        story = await api.get<any>("/ai/story/latest");
+      } catch (err) {
+        console.log("No existing story found, generating a new one.");
+      }
+
+      if (!story) {
+        try {
+          story = await api.post<any>("/ai/story/generate");
+        } catch (genErr) {
+          console.error("Dashboard weekly story generation error:", genErr);
+        }
+      }
+      
       setLatestStory(story);
     } catch (err) {
       console.error("Dashboard data fetch error:", err);
