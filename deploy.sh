@@ -27,7 +27,34 @@ fi
 
 # Submit Build to Google Cloud Build
 echo "Submitting build to Google Cloud Build..."
-gcloud builds submit --config=cloudbuild.yaml .
+
+SUBSTITUTIONS=""
+if [ -f "frontend/.env.local" ]; then
+    echo "Loading environment variables from frontend/.env.local..."
+    
+    # Extract keys and strip any carriage returns (\r) for Windows compatibility
+    API_KEY=$(grep NEXT_PUBLIC_FIREBASE_API_KEY frontend/.env.local | cut -d '=' -f2- | tr -d '\r')
+    AUTH_DOMAIN=$(grep NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN frontend/.env.local | cut -d '=' -f2- | tr -d '\r')
+    PROJECT_ID_ENV=$(grep NEXT_PUBLIC_FIREBASE_PROJECT_ID frontend/.env.local | cut -d '=' -f2- | tr -d '\r')
+    STORAGE_BUCKET=$(grep NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET frontend/.env.local | cut -d '=' -f2- | tr -d '\r')
+    MESSAGING_SENDER_ID=$(grep NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID frontend/.env.local | cut -d '=' -f2- | tr -d '\r')
+    APP_ID=$(grep NEXT_PUBLIC_FIREBASE_APP_ID frontend/.env.local | cut -d '=' -f2- | tr -d '\r')
+    
+    # Fallback to active gcloud project ID if empty
+    if [ -z "$PROJECT_ID_ENV" ]; then
+        PROJECT_ID_ENV=$PROJECT_ID
+    fi
+
+    SUBSTITUTIONS="_FIREBASE_API_KEY=${API_KEY},_FIREBASE_AUTH_DOMAIN=${AUTH_DOMAIN},_FIREBASE_PROJECT_ID=${PROJECT_ID_ENV},_FIREBASE_STORAGE_BUCKET=${STORAGE_BUCKET},_FIREBASE_MESSAGING_SENDER_ID=${MESSAGING_SENDER_ID},_FIREBASE_APP_ID=${APP_ID}"
+fi
+
+if [ -n "$SUBSTITUTIONS" ]; then
+    echo "Running build with substitutions..."
+    gcloud builds submit --config=cloudbuild.yaml --substitutions="$SUBSTITUTIONS" .
+else
+    echo "No local environment variables found. Running build with default placeholders..."
+    gcloud builds submit --config=cloudbuild.yaml .
+fi
 
 echo "========================================="
 echo "EcoMind AI Deployment Submitted Successfully!"

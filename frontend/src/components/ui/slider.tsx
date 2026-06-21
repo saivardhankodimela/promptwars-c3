@@ -23,15 +23,22 @@ export const Slider = ({
   step = 1,
   value,
   onChange,
+  id,
   ...props
 }: SliderProps) => {
+  const generatedId = id || React.useId();
   return (
     <div className={twMerge("flex flex-col space-y-2 w-full", className)}>
       <div className="flex justify-between items-center text-sm">
-        {label && <span className="font-semibold text-foreground/80">{label}</span>}
+        {label && (
+          <label htmlFor={generatedId} className="font-semibold text-foreground/80">
+            {label}
+          </label>
+        )}
         {displayValue && <span className="font-mono text-primary font-bold">{displayValue}</span>}
       </div>
       <input
+        id={generatedId}
         type="range"
         min={min}
         max={max}

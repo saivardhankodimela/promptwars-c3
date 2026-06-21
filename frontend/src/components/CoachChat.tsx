@@ -168,13 +168,14 @@ export const CoachChat = () => {
         >
           <input
             type="text"
+            aria-label="Type your sustainability question"
             placeholder="Type your sustainability question..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
             disabled={loading}
             className="flex-1 rounded-xl bg-card border border-card-border px-4 py-3 text-sm focus:outline-none focus:border-primary/80 transition duration-300 text-foreground"
           />
-          <Button type="submit" variant="primary" disabled={loading || !input.trim()}>
+          <Button type="submit" variant="primary" disabled={loading || !input.trim()} aria-label="Send message">
             <Send className="h-4 w-4" />
           </Button>
         </form>

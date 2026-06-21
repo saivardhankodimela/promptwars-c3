@@ -129,10 +129,11 @@ export const OnboardingFlow = () => {
               </div>
               
               <div className="space-y-4">
-                <label className="block text-sm font-semibold text-foreground/80">
+                <label htmlFor="commuteDistInput" className="block text-sm font-semibold text-foreground/80">
                   Daily Commute Distance: <span className="text-primary font-mono font-bold">{commuteDist} km</span>
                 </label>
                 <input
+                  id="commuteDistInput"
                   type="range"
                   min="0"
                   max="150"
@@ -228,10 +229,11 @@ export const OnboardingFlow = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-foreground/80">
+                  <label htmlFor="deliveriesInput" className="block text-sm font-semibold text-foreground/80">
                     Food Delivery Orders (Zomato/Swiggy): <span className="text-primary font-mono font-bold">{deliveries} / week</span>
                   </label>
                   <input
+                    id="deliveriesInput"
                     type="range"
                     min="0"
                     max="21"
@@ -261,10 +263,11 @@ export const OnboardingFlow = () => {
 
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-foreground/80">
+                  <label htmlFor="acHoursInput" className="block text-sm font-semibold text-foreground/80">
                     Daily Air Conditioner (AC) Usage: <span className="text-primary font-mono font-bold">{acHours} hours</span>
                   </label>
                   <input
+                    id="acHoursInput"
                     type="range"
                     min="0"
                     max="24"
@@ -275,10 +278,11 @@ export const OnboardingFlow = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-foreground/80">
+                  <label htmlFor="electricityBillInput" className="block text-sm font-semibold text-foreground/80">
                     Monthly Electricity Bill: <span className="text-primary font-mono font-bold">₹{bill}</span>
                   </label>
                   <input
+                    id="electricityBillInput"
                     type="range"
                     min="200"
                     max="15000"
@@ -333,10 +337,11 @@ export const OnboardingFlow = () => {
 
               <div className="space-y-5">
                 <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-foreground/80">
+                  <label htmlFor="domesticFlightsInput" className="block text-sm font-semibold text-foreground/80">
                     Annual Domestic Flights: <span className="text-primary font-mono font-bold">{domesticFlights} flights</span>
                   </label>
                   <input
+                    id="domesticFlightsInput"
                     type="range"
                     min="0"
                     max="30"
@@ -347,10 +352,11 @@ export const OnboardingFlow = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-foreground/80">
+                  <label htmlFor="intlFlightsInput" className="block text-sm font-semibold text-foreground/80">
                     Annual International Flights: <span className="text-primary font-mono font-bold">{intlFlights} flights</span>
                   </label>
                   <input
+                    id="intlFlightsInput"
                     type="range"
                     min="0"
                     max="10"
@@ -380,10 +386,11 @@ export const OnboardingFlow = () => {
 
               <div className="space-y-5">
                 <div className="space-y-2">
-                  <label className="block text-sm font-semibold text-foreground/80">
+                  <label htmlFor="onlineShoppingInput" className="block text-sm font-semibold text-foreground/80">
                     Online Shopping Deliveries (Amazon/Flipkart): <span className="text-primary font-mono font-bold">{onlineShopping} orders/month</span>
                   </label>
                   <input
+                    id="onlineShoppingInput"
                     type="range"
                     min="0"
                     max="20"
